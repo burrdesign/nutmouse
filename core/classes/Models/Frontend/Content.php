@@ -36,6 +36,7 @@ class Models_Frontend_Content extends Model {
 		$sql->setQuery("
 			SELECT * FROM bd_frontend_content
 			WHERE content_url = '{{path}}'
+				AND ( content_type = 'content' OR content_type = '' )
 				AND content_published <= NOW()
 				AND content_active = 1
 		");

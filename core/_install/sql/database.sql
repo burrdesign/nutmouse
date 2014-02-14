@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2014 at 05:33 PM
+-- Generation Time: Feb 14, 2014 at 06:27 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `bd_admin_user` (
 
 CREATE TABLE IF NOT EXISTS `bd_frontend_content` (
   `content_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `content_type` varchar(255) NOT NULL,
   `content_author` varchar(255) DEFAULT NULL,
   `content_created` datetime NOT NULL,
   `content_lastchanged` datetime NOT NULL,
@@ -62,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `bd_frontend_content` (
 -- Dumping data for table `bd_frontend_content`
 --
 
-INSERT INTO `bd_frontend_content` (`content_id`, `content_author`, `content_created`, `content_lastchanged`, `content_published`, `content_active`, `content_template_inner`, `content_template_outer`, `content_url`) VALUES
-(1, NULL, '2014-02-14 23:55:00', '2014-02-14 23:55:00', '2014-02-14 23:55:00', 1, NULL, NULL, '');
+INSERT INTO `bd_frontend_content` (`content_id`, `content_type`, `content_author`, `content_created`, `content_lastchanged`, `content_published`, `content_active`, `content_template_inner`, `content_template_outer`, `content_url`) VALUES
+(1, 'content', NULL, '2014-02-14 23:55:00', '2014-02-14 23:55:00', '2014-02-14 23:55:00', 1, NULL, NULL, '');
 
 -- --------------------------------------------------------
 

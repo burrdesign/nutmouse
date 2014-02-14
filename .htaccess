@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteBase /
+
+RewriteCond %{REQUEST_URI} !(core\/|images\/|files\/|templates\.js$|\.css$|\.jpg$|\.png$|\.ico)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?url=$1 [PT,L,QSA]
+</IfModule>
+
+Options -Indexes

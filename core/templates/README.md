@@ -1,0 +1,1 @@
+Folder for the templates of the different themes. Each theme is represented by a folder, _nutmouse is the default theme.

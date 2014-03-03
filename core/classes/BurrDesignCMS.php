@@ -17,6 +17,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/Controllers/Frontend/Con
 //Other libraries
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Cache.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Config.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Locale.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/Db/SqlManager.php');
  
 class BurrDesignCMS {

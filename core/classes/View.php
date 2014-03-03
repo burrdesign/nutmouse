@@ -17,7 +17,7 @@ class View {
 	private $theme = null;
 	private $default_theme = '_nutmouse';
 
-	//Variablen, die im Template zur Verfügung stehen sollen
+	//Variables for within the template should be assigned here
 	private $_ = array();
 	
 	public function __construct(){
@@ -87,8 +87,40 @@ class View {
 		ob_start();
 			include($file);
 			$output = ob_get_contents();
+			$output = $this->parseTemplate($output);
 		ob_end_clean();
 		return $output;
+	}
+	
+	public function parseTemplate($text){
+		/**
+		 * Parsing the template
+		 *
+		 * Parameters
+		 * text: given text that should be parsed
+		 *
+		 * Returns
+		 * text: parsed text
+		 **/
+		 
+		//Parse simple variables -> {{var CODE}}
+		$cnt = preg_match_all("/\{\{var (.+?)\}\}/", $text, $vars);
+		for($i=0; $i<$cnt; $i++){
+			$text = str_replace($vars[0][$i], $this->_[$vars[1][$i]], $text);
+		} 
+		 
+		//Parse locale tags -> {{locale CODE}}DEFAULTTEXT{{/locale}}
+		$cnt = preg_match_all("/\{\{locale (.+?)\}\}(.*?)\{\{\/locale\}\}/", $text, $locales);
+		for($i=0; $i<$cnt; $i++){
+			$value = Locale::get($locales[1][$i], null, $locales[2][$i]);
+			$text = str_replace($locales[0][$i], $value, $text);
+		}
+
+		if(!$text){
+			throw new Exception("Text is empty");
+		}
+		
+		return $text;
 	}
 	
 	public function header($header){

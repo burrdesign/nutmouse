@@ -24,6 +24,8 @@ class SqlManager {
 	private $q_result;
 	private $q_table;
 	
+	private $table_info = array();
+	
 	public function __construct(){
 		//Load config
 		$this->loadConfig();
@@ -263,7 +265,7 @@ class SqlManager {
 		$this->q_table = $table;
 		
 		//Validate and prepare data array
-		$insert = $this->getDataArray($data_array);
+		$insert = $this->getDataObject($data_array);
 		if(count($insert) < 1){
 			//no valid data found, so nothing to insert
 			return;
@@ -286,7 +288,8 @@ class SqlManager {
 		$statement .= ")";
 		
 		//and execute it
-		$this->setQuery($statement)->execute();
+		$this->setQuery($statement);
+		$this->execute();
 	}
 	
 	public function getLastInsertID(){
@@ -337,8 +340,10 @@ class SqlManager {
 			return;
 		}
 		
+		$this->q_table = $table;
+		
 		//Get valid data array
-		$update = $this->getDataArray($data_array);
+		$update = $this->getDataObject($data_array);
 		foreach($this->table_info['primarykey'] as $key){
 			if(!$update[$key]){
 				return;
@@ -362,7 +367,8 @@ class SqlManager {
 		$statement .= " LIMIT 1";
 		
 		//Execute statement
-		$this->setQuery($statement)->execute();
+		$this->setQuery($statement);
+		$this->execute();
 	}
 	
 	public function delete($table,$data_array){
@@ -383,6 +389,8 @@ class SqlManager {
 			return;
 		}
 		
+		$this->q_table = $table;
+		
 		//Get vaild data array
 		$delete = $this->getDataObject($object);
 		foreach($this->table_info['primarykey'] as $key){
@@ -402,7 +410,8 @@ class SqlManager {
 		$statement .= " LIMIT 1";
 		
 		//Execute statement
-		$this->setQuery($statement)->execute();
+		$this->setQuery($statement);
+		$this->execute();
 	}
 	
 	public function get($table,$keyfield,$keyvalue){
@@ -486,6 +495,7 @@ class SqlManager {
 				}
 			}
 		}
+		
 		return $info;
 	}
 	

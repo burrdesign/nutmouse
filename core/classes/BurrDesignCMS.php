@@ -15,6 +15,8 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/Controllers/Frontend/Content.php');
 
 //Other libraries
+include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Cache.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Config.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/Db/SqlManager.php');
  
 class BurrDesignCMS {
@@ -23,6 +25,9 @@ class BurrDesignCMS {
 	private $controller;
 	
 	public function __construct(){
+		//Initialize config
+		Config::load();
+		
 		//Determine requested view
 		$this->view = $this->determineView($_REQUEST['url']);
 		

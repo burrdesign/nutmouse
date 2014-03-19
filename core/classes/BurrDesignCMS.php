@@ -3,7 +3,7 @@
 /**
  * @NutMouse CMS
  * @author: Julian Burr
- * @lastchanged: 2014-02-10
+ * @lastchanged: 2014-03-10
  * @version: 0.1 
  *
  * BurrDesignCMS
@@ -18,6 +18,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/Controllers/Frontend/Con
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Cache.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Config.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Locale.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/System/Session.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/core/classes/Db/SqlManager.php');
  
 class BurrDesignCMS {
@@ -28,6 +29,9 @@ class BurrDesignCMS {
 	public function __construct(){
 		//Initialize config
 		Config::load();
+		
+		//Initialize session
+		Session::init();
 		
 		//Determine requested view
 		$this->view = $this->determineView($_REQUEST['url']);
@@ -52,10 +56,16 @@ class BurrDesignCMS {
 		 **/
 		
 		$view = false;
+		$view_section = false;
 		$url_parts = explode('/', $url);
 		
 		//TODO: Here should come the part, where the url sheme should be analized according to the system configuration
-		$view = "Frontend_Content";
+		if($url_parts[0] == "admin"){
+			$view = "Admin_Index";
+		} else {
+			$view = "Frontend_Content";
+		}
+		
 		$_GET['BD']['core']['view']['name'] = $this->view;
 		$_GET['BD']['core']['url'] = $url;
 		$_GET['BD']['core']['path'] = $url;
